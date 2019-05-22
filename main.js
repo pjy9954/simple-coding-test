@@ -5,13 +5,14 @@ $(document).ready(function () {
 });
 
 var stage = 1;
-var startTime = 0;
+var start_time = 0;
 var timer = 0;
 var timer_status = "off";
 var elapsed_time = 0;
 var total_elapsed_time = 0;
 
 function startClicked() {
+    start_time = getCookie("start_time");
     if (timer_status == "off") {
         timer_status = "on";
 
@@ -21,9 +22,13 @@ function startClicked() {
         $("#answer_box").show();
         $("#start_button").hide();
 
-        startTime = Date.now();
-        timer = setInterval(function() {
-            elapsed_time = Date.now() - startTime;
+        if (start_time == null) {
+            start_time = Date.now();
+            setCookie("start_time", start_time, 7);
+        }
+
+        timer = setInterval(function () {
+            elapsed_time = Date.now() - start_time;
             $("#timer").text(timeToStr(elapsed_time));
         }, 50);
     }
@@ -32,15 +37,24 @@ function startClicked() {
 function timeToStr(e_t) {
     var elapsed = new Date(e_t);
 
-    var mm = elapsed.getMinutes();
-    var ss = elapsed.getSeconds();
-    var zz = elapsed.getMilliseconds() / 100;
+    var hh = elapsed.getUTCHours();
+    var mm = elapsed.getUTCMinutes();
+    var ss = elapsed.getUTCSeconds();
+    var zz = elapsed.getUTCMilliseconds() / 100;
+
+    if (hh > 0) { 
+        if (hh < 10) { hh = "0" + hh }
+        hh = hh + ":";
+    }
+    else {
+        hh = ""
+    }
 
     if (mm < 10) { mm = "0" + mm }
     if (ss < 10) { ss = "0" + ss }
     zz = ("" + zz).substr(0, 1);
 
-    return mm + ":" + ss + "." + zz;
+    return hh + mm + ":" + ss + "." + zz;
 }
 
 function stop() {
@@ -66,7 +80,7 @@ function checkAnswer() {
     if (isRightAnswer(stage, answer)) {
         var record_txt = $("#timer").text();
         $("<li>" + stage + "단계 : " + record_txt + "</li>").insertBefore("#total_score");
-                
+
         total_elapsed_time += elapsed_time;
         $("#total_score").text("총합 : " + timeToStr(total_elapsed_time));
 
@@ -101,6 +115,29 @@ function isRightAnswer(stage, answer) {
     }
 
     return false;
+}
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {
+    document.cookie = name + '=; Max-Age=-99999999;';
 }
 
 //문제 1번의 정답 : good_j0b_fr13nd!
