@@ -1,1 +1,30 @@
-<h1>hello world!_v2</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>심플 테스트</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+</head>
+
+<body>
+    <h1>문제를 해결하고 경품을 받아가세요</h1>
+    <p>
+        <h3>현재 단계 : <a id="stage">1</a>/3</h3>
+        <div id="score">
+            <li id="total_score"></li>
+        </div>
+        <div id="duration">경과시간 : <a id="timer"></a></div>
+        <div id="problem"></div>
+        <div id="answer_box">정답 : <input id="answer" type="text"></div>
+        <button id="start_button">시작하기</button>
+    </p>
+    <script src="./main.js"></script>
+</body>
+</html>

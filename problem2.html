@@ -1,0 +1,43 @@
+<p><q>소스 조작</q>
+    <br>아래의 입력칸에 hello world! 를 써 넣고 버튼을 누르세요
+    <!-- <br><small style="color:gray">※이 코드는 동적으로 로드되었습니다</small> -->
+    <br>
+    <input id="prob_2_input" placeholder="hello world!" type="text" disabled></input>
+    <button onclick="checkResult();">확인</button>
+
+    <div id="prob_2_answer"></div>
+</p>
+<script>
+    var enc_answer = "qwtnjjqxtg.,d$r6ulqdtvl)qwfvj,q#rt.*c2";
+
+    function generateAnswer(input) {
+        var strs = [
+            "zxcasdqwe123!@#$",
+            "vbnfghrty456`%^&",
+            "m,.jkluio789/*()",
+        ];
+        var output = "";
+
+        for (i = 0; i < input.length; i += 2) {
+            var upper_c = input[i];
+            var lower_c = input[i + 1];
+            var j = i / 2;
+
+            var upper = strs[j % 3].indexOf(upper_c);
+            var lower = strs[j % 3].indexOf(lower_c);
+
+            var code = (upper << 4) | lower;
+
+            output += String.fromCharCode(code);
+        }
+        return output;
+    }
+    
+    function checkResult() {
+        var txt = $("#prob_2_input").val();
+        if (txt == "hello world!") {
+            var raw_answer = generateAnswer(enc_answer);
+            $("#prob_2_answer").text("2단계의 답은 " + raw_answer + " 입니다");
+        }
+    }
+</script>
