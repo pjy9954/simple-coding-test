@@ -2,7 +2,12 @@ $(document).ready(function () {
     $("#start_button").click(startClicked);
     $("#answer").change(checkAnswer);
     $("#answer").keyup(checkAnswer);
+    $(window).bind('beforeunload', beforeUnloadHandler);
 });
+
+function beforeUnloadHandler() {
+    return '페이지에서 벗어날경우 기록은 유지되지만 1번문제부터 다시 시작하게 됩니다.';
+}
 
 var stage = 1;
 var start_time = 0;
@@ -42,7 +47,7 @@ function timeToStr(e_t) {
     var ss = elapsed.getUTCSeconds();
     var zz = elapsed.getUTCMilliseconds() / 100;
 
-    if (hh > 0) { 
+    if (hh > 0) {
         if (hh < 10) { hh = "0" + hh }
         hh = hh + ":";
     }
