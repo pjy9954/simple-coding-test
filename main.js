@@ -100,9 +100,14 @@ function checkAnswer() {
         $(this).val("");
         timer_status = "off";
         stop();
-
-        stage++;
-        $("#stage").text(stage);
+        
+        if (stage != 3) {
+            stage++;
+            $("#stage").text(stage);
+        }
+        else {
+            alert("모든 문제를 해결하셨습니다. 축하드립니다!");
+        }
     }
 }
 
