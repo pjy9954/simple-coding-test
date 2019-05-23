@@ -145,4 +145,4 @@ function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=-99999999;';
 }
 
-//문제 1번의 정답 : good_j0b_fr13nd!
+//answer of problem No.1 : good_j0b_fr13nd!
